@@ -1,0 +1,778 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Angler API &mdash; blacktip 0.0.8 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="blacktip 0.0.8 documentation" href="index.html"/>
+        <link rel="next" title="License" href="LICENSE.html"/>
+        <link rel="prev" title="Blacktip Research Software Reference Manual" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> blacktip
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Angler API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-import-and-initialization">Install, Import, and Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#angler-functions">Angler Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#angler-querycik-ticker"><em>Angler.queryCIK(ticker)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angler-queryname-self-ticker-or-cik"><em>Angler.queryName(self, ticker_or_CIK)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angler-query10k-self-ticker-or-cik-years"><em>Angler.query10K(self, ticker_or_CIK, years)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angler-query10q-self-ticker-or-cik-periods"><em>Angler.query10Q(self, ticker_or_CIK, periods)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angler-query-self-command"><em>Angler.query(self, command)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angler-dispose-self"><em>Angler.dispose(self)</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#form-functions">Form Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#form-form-self"><em>Form.form(self)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form-filter-self-regex-index-tag"><em>Form.filter(self, regex, index=’tag’)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form-asset-sheet-self"><em>Form.asset_sheet(self)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form-liability-sheet-self"><em>Form.liability_sheet(self)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form-debt-sheet-self"><em>Form.debt_sheet(self)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form-to-csv-self-path-or-buf"><em>Form.to_csv(self, path_or_buf, …)</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#form10k-functions">Form10K Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#form10k-calc-roe-self-as-list-false"><em>Form10K.calc_ROE(self, as_list=False)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form10k-calc-currentratio-self-as-list-false"><em>Form10K.calc_CurrentRatio(self, as_list=False)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form10k-calc-debttoequity-self-as-list-false"><em>Form10K.calc_DebtToEquity(self, as_list=False)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#form10k-calc-bookvalue-self-as-list-false"><em>Form10K.calc_BookValue(self, as_list=False)</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#form10q-functions">Form10Q Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">blacktip</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Angler API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/documentation.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="angler-api">
+<h1>Angler API<a class="headerlink" href="#angler-api" title="Permalink to this headline">¶</a></h1>
+<p>Angler is a SEC financial data analysis tool provided by Blacktip Research.
+You must make an account on the <a class="reference external" href="http://blacktipresearch.com">Blacktip website</a> prior to use.</p>
+<div class="section" id="install-import-and-initialization">
+<h2>Install, Import, and Initialization<a class="headerlink" href="#install-import-and-initialization" title="Permalink to this headline">¶</a></h2>
+<p>You can find Angler on <a class="reference external" href="https://pypi.org/project/blacktip/">PyPI</a>, and can install via the
+terminal using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">blacktip</span></code>. To import Angler in a file, do the following:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; from blacktip.angler import Angler
+&gt;&gt;&gt; instance = Angler(username, password)
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">username</span></code> and <code class="docutils literal notranslate"><span class="pre">password</span></code> with your personal login credentials.</p>
+</div>
+<div class="section" id="angler-functions">
+<h2>Angler Functions<a class="headerlink" href="#angler-functions" title="Permalink to this headline">¶</a></h2>
+<p><strong>The querying object.</strong> Angler provides several querying functions to interface with the database.</p>
+<div class="section" id="angler-querycik-ticker">
+<h3><em>Angler.queryCIK(ticker)</em><a class="headerlink" href="#angler-querycik-ticker" title="Permalink to this headline">¶</a></h3>
+<p>Get the CIK (central index key) of an inputted ticker.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>ticker : string</strong></p>
+<ul>
+<li><p>the ticker for which to search the corresponding CIK</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>tuple</strong></p>
+<ul>
+<li><p>a tuple containing (ticker, CIK) as strings</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; Angler.queryCIK(&quot;AAPL&quot;)
+(&#39;AAPL&#39;, &#39;320193&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="angler-queryname-self-ticker-or-cik">
+<h3><em>Angler.queryName(self, ticker_or_CIK)</em><a class="headerlink" href="#angler-queryname-self-ticker-or-cik" title="Permalink to this headline">¶</a></h3>
+<p>Get the name of a company from its ticker or CIK number.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>ticker_or_CIK : string or int</strong></p>
+<ul>
+<li><p>the ticker or CIK number of the company</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>string</strong></p>
+<ul>
+<li><p>the name of the company</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; instance.queryName(&quot;AAPL&quot;) 
+&#39;APPLE INC&#39;
+&gt;&gt;&gt; instance.queryName(320193)
+&#39;APPLE INC&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="angler-query10k-self-ticker-or-cik-years">
+<h3><em>Angler.query10K(self, ticker_or_CIK, years)</em><a class="headerlink" href="#angler-query10k-self-ticker-or-cik-years" title="Permalink to this headline">¶</a></h3>
+<p>Get company 10-K reports for selected years.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>ticker_or_CIK : string or int</strong></p>
+<ul>
+<li><p>the ticker or CIK number of the company</p></li>
+</ul>
+</li>
+<li><p><strong>years : int or iterable</strong></p>
+<ul>
+<li><p>the year or years of interest</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>Form10K</strong></p>
+<ul>
+<li><p>returns a Form10K object with the selected query</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form10K =  instance.query10K(&quot;AAPL&quot;, [2018, 2019])
+&gt;&gt;&gt; print(form10K)
+fy                                                                 2018          2019
+tag                                                uom
+AccountsPayableCurrent                             USD     4.424200e+10  4.623600e+10
+AccountsReceivableNetCurrent                       USD     1.787400e+10  2.292600e+10
+AccruedIncomeTaxesNoncurrent                       USD     2.570000e+08  3.358900e+10
+AccumulatedDepreciationDepletionAndAmortization... USD     4.129300e+10  4.909900e+10
+AccumulatedOtherComprehensiveIncomeLossNetOfTax    USD    -1.500000e+08 -5.840000e+08
+...                                                                 ...           ...
+UnrecordedUnconditionalPurchaseObligationBalanc... USD     9.328000e+09  8.211000e+09
+UnrecordedUnconditionalPurchaseObligationDueAft... USD     6.600000e+07  1.100000e+08
+WeightedAverageNumberDilutedSharesOutstandingAd... shares  2.946100e+07  3.445000e+07
+WeightedAverageNumberOfDilutedSharesOutstanding    shares  5.500281e+09  5.251692e+09
+WeightedAverageNumberOfSharesOutstandingBasic      shares  5.470820e+09  5.217242e+09
+</pre></div>
+</div>
+</div>
+<div class="section" id="angler-query10q-self-ticker-or-cik-periods">
+<h3><em>Angler.query10Q(self, ticker_or_CIK, periods)</em><a class="headerlink" href="#angler-query10q-self-ticker-or-cik-periods" title="Permalink to this headline">¶</a></h3>
+<p>Get company 10-Q reports for selected periods.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>ticker_or_CIK : string or int</strong></p>
+<ul>
+<li><p>the ticker or CIK number of the company</p></li>
+</ul>
+</li>
+<li><p><strong>periods : int or iterable of ints, tuple or iterable of tuples</strong></p>
+<ul>
+<li><p>the periods of interest in (year, quarter) format</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>Form10Q</strong></p>
+<ul>
+<li><p>returns a Form10Q object with the selected query</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span># the following commands are equivalent Angler.query10Q() calls
+&gt;&gt;&gt; instance.query10Q(&quot;AAPL&quot;, 2019)
+&gt;&gt;&gt; instance.query10Q(&quot;AAPL&quot;, [(2019, &quot;Q1&quot;), (2019, &quot;Q2&quot;), (2019, &quot;Q3&quot;)])
+fy                                                                 2019
+fp                                                                   Q1            Q2            Q3
+tag                                                uom
+AccountsPayableCurrent                             USD     5.588800e+10  3.044300e+10  5.588800e+10
+AccountsReceivableNetCurrent                       USD     2.318600e+10  1.508500e+10  2.318600e+10
+AccruedIncomeTaxesNoncurrent                       USD     3.358900e+10  3.098600e+10  3.358900e+10
+AccumulatedDepreciationDepletionAndAmortization... USD     4.909900e+10  5.429000e+10  4.909900e+10
+AccumulatedOtherComprehensiveIncomeLossNetOfTax    USD    -3.454000e+09 -1.499000e+09 -6.390000e+08
+...                                                                 ...           ...           ...
+UnrecognizedTaxBenefitsThatWouldImpactEffective... USD     8.200000e+09  7.300000e+09  8.100000e+09
+UnrecordedUnconditionalPurchaseObligationBalanc... USD     7.400000e+09  7.600000e+09  8.100000e+09
+WeightedAverageNumberDilutedSharesOutstandingAd... shares  4.491000e+07  2.657500e+07  3.074700e+07
+WeightedAverageNumberOfDilutedSharesOutstanding    shares  5.157787e+09  4.700646e+09  4.601380e+09
+WeightedAverageNumberOfSharesOutstandingBasic      shares  5.112877e+09  4.704945e+09  4.660175e+09
+</pre></div>
+</div>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span># additionally, one can query multiple years
+&gt;&gt;&gt; instance.query10Q(&quot;AAPL&quot;, [2018, 2019])
+fy                                                                 2018                ...          2019
+fp                                                                   Q1            Q2  ...            Q2            Q3
+tag                                                uom                                 ...
+AccountsPayableCurrent                             USD     6.298500e+10  4.904900e+10  ...  3.044300e+10  5.588800e+10
+AccountsReceivableNetCurrent                       USD     2.344000e+10  1.787400e+10  ...  1.508500e+10  2.318600e+10
+AccruedIncomeTaxesNoncurrent                       USD     3.491300e+10  2.570000e+08  ...  3.098600e+10  3.358900e+10
+AccruedLiabilitiesCurrent                          USD     2.574400e+10  2.574400e+10  ...           NaN           NaN
+AccumulatedDepreciationDepletionAndAmortization... USD     4.129300e+10  4.129300e+10  ...  5.429000e+10  4.909900e+10
+...                                                                 ...           ...  ...           ...           ...
+UnrecognizedTaxBenefitsThatWouldImpactEffective... USD     7.700000e+09  8.200000e+09  ...  7.300000e+09  8.100000e+09
+UnrecordedUnconditionalPurchaseObligationBalanc... USD     8.700000e+09  8.300000e+09  ...  7.600000e+09  8.100000e+09
+WeightedAverageNumberDilutedSharesOutstandingAd... shares  2.933400e+07  3.589700e+07  ...  2.657500e+07  3.074700e+07
+WeightedAverageNumberOfDilutedSharesOutstanding    shares  5.327995e+09  5.261688e+09  ...  4.700646e+09  4.601380e+09
+WeightedAverageNumberOfSharesOutstandingBasic      shares  5.298661e+09  5.225791e+09  ...  4.704945e+09  4.660175e+09
+</pre></div>
+</div>
+</div>
+<div class="section" id="angler-query-self-command">
+<h3><em>Angler.query(self, command)</em><a class="headerlink" href="#angler-query-self-command" title="Permalink to this headline">¶</a></h3>
+<p>Query your own custom command on the XBRL dataset in MySQL format.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>command : string</strong></p>
+<ul>
+<li><p>the command string</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>SQLAlchemy.engine.ResultProxy</strong></p>
+<ul>
+<li><p>the query result</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; _, cik = Angler.queryCIK(&quot;aapl&quot;)
+&gt;&gt;&gt; command = &quot;SELECT * FROM sub WHERE cik={cik}&quot;.format(cik=cik)
+&gt;&gt;&gt; instance.query(command).first()
+(&#39;0000320193-17-000009&#39;, Decimal(&#39;320193&#39;), &#39;APPLE INC&#39;, Decimal(&#39;3571&#39;), &#39;US&#39;, &#39;CA&#39;, &#39;CUPERTINO&#39;, &#39;95014&#39;, &#39;ONE INFINITE LOOP&#39;, &#39;&#39;, &#39;(408) 996-10&#39;, &#39;US&#39;, &#39;CA&#39;, &#39;CUPERTINO&#39;, &#39;95014&#39;, &#39;ONE INFINITE LOOP&#39;, &#39;&#39;, &#39;US&#39;, &#39;CA&#39;, Decimal(&#39;942404110&#39;), &#39;APPLE COMPUTER INC&#39;, &#39;19970808&#39;, &#39;1-LAF&#39;, 0, &#39;0930&#39;, &#39;10-Q&#39;, datetime.date(2017, 6, 30), 2017, &#39;Q3&#39;, datetime.date(2017, 8, 2), datetime.datetime(2017, 8, 2, 16, 31), 0, 1, &#39;aapl-20170701.xml&#39;, Decimal(&#39;1&#39;), &#39;&#39;, &#39;2017q3&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="angler-dispose-self">
+<h3><em>Angler.dispose(self)</em><a class="headerlink" href="#angler-dispose-self" title="Permalink to this headline">¶</a></h3>
+<p>Closes the connection to the database.</p>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; instance.dispose()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="form-functions">
+<h2>Form Functions<a class="headerlink" href="#form-functions" title="Permalink to this headline">¶</a></h2>
+<p><strong>The (parent) data manipulation function.</strong> The <strong>Form</strong> object offers some convenient data
+manipulation functions that apply to all (10-K and 10-Q) SEC forms. <strong>Form10K</strong> and <strong>Form10Q</strong>
+objects are subclasses of <strong>Form</strong> and therefore all <strong>Form</strong> functions apply to them.</p>
+<div class="section" id="form-form-self">
+<h3><em>Form.form(self)</em><a class="headerlink" href="#form-form-self" title="Permalink to this headline">¶</a></h3>
+<p>Returns the contents of the Form object.</p>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>pandas.DataFrame</strong></p>
+<ul>
+<li><p>the contents of the Form as a pandas dataframs</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form = instance.query10K(&quot;AAPL&quot;, 2019)
+&gt;&gt;&gt; form.form() # returns a Form10K object, a subclass of Form 
+fy                                                                 2019
+tag                                                uom
+AccountsPayableCurrent                             USD     4.623600e+10
+AccountsReceivableNetCurrent                       USD     2.292600e+10
+AccruedIncomeTaxesNoncurrent                       USD     2.954500e+10
+AccumulatedDepreciationDepletionAndAmortization... USD     5.857900e+10
+AccumulatedOtherComprehensiveIncomeLossNetOfTax    USD    -5.840000e+08
+...                                                                 ...
+UnrecordedUnconditionalPurchaseObligationBalanc... USD     8.211000e+09
+UnrecordedUnconditionalPurchaseObligationDueAft... USD     1.100000e+08
+WeightedAverageNumberDilutedSharesOutstandingAd... shares  3.107900e+07
+WeightedAverageNumberOfDilutedSharesOutstanding    shares  4.648913e+09
+WeightedAverageNumberOfSharesOutstandingBasic      shares  4.617834e+09
+</pre></div>
+</div>
+<p>To save your form to csv, use the <strong>Form.form()</strong> function then <strong>pandas.DataFrame.to_csv()</strong>:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; pandas_dataframe = form.form()
+&gt;&gt;&gt; pandas_dataframe.to_csv(filepath) # specify filepath to save to
+</pre></div>
+</div>
+<p>Note, one can print and perform basic indexing directly on the <strong>Form</strong> object:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; print(form)
+...
+&gt;&gt;&gt; print(form[2019])
+...
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-filter-self-regex-index-tag">
+<h3><em>Form.filter(self, regex, index=’tag’)</em><a class="headerlink" href="#form-filter-self-regex-index-tag" title="Permalink to this headline">¶</a></h3>
+<p>Filter rows of the form by a specific keyword regular expression (regex).</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>regex : string</strong></p>
+<ul>
+<li><p>the regular expression to filter the rows by</p></li>
+</ul>
+</li>
+<li><p><strong>index : string</strong></p>
+<ul>
+<li><p>the index (“tag” or “uom”) to apply the filter to; defaults to “tag”</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>pandas.DataFrame</strong></p>
+<ul>
+<li><p>a pandas dataframe with the filtered results</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form = instance.query10Q(&quot;AAPL&quot;, [2018, 2019])
+&gt;&gt;&gt; form.filter(&quot;^NetIncomeLoss$&quot;)
+fy                         2018                                      2019
+fp                           Q1            Q2            Q3            Q1            Q2            Q3
+tag           uom
+NetIncomeLoss USD  2.006500e+10  1.382200e+10  1.151900e+10  1.996500e+10  1.156100e+10  1.004400e+10
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-asset-sheet-self">
+<h3><em>Form.asset_sheet(self)</em><a class="headerlink" href="#form-asset-sheet-self" title="Permalink to this headline">¶</a></h3>
+<p>Filters the form to generate an asset sheet. Wrapper around <code class="docutils literal notranslate"><span class="pre">form.filter(&quot;Asset|Assets&quot;)</span></code>.</p>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>pandas.DataFrame</strong></p>
+<ul>
+<li><p>a pandas dataframe with just values pertaining to “assets”</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form = instance.query10K(&quot;aapl&quot;, 2019)
+&gt;&gt;&gt; form.asset_sheet()
+fy                                                              2019
+tag                                                uom
+Assets                                             USD  3.385160e+11
+AssetsCurrent                                      USD  1.628190e+11
+AssetsNoncurrent                                   USD  1.756970e+11
+DeferredTaxAssetsDeferredIncome                    USD  1.372000e+09
+DeferredTaxAssetsGoodwillAndIntangibleAssets       USD  1.143300e+10
+DeferredTaxAssetsLiabilitiesNet                    USD  8.045000e+09
+DeferredTaxAssetsNet                               USD  1.964000e+10
+DeferredTaxAssetsOther                             USD  6.970000e+08
+DeferredTaxAssetsPropertyPlantAndEquipment         USD  1.370000e+08
+DeferredTaxAssetsTaxDeferredExpenseCompensation... USD  7.490000e+08
+DeferredTaxAssetsTaxDeferredExpenseReservesAndA... USD  5.389000e+09
+DeferredTaxAssetsUnrealizedLossesOnAvailablefor... USD  0.000000e+00
+DerivativeAssetsReductionforMasterNettingArrang... USD  2.700000e+09
+IncreaseDecreaseInOtherOperatingAssets             USD -8.730000e+08
+NoncurrentAssets                                   USD  3.737800e+10
+OtherAssetsCurrent                                 USD  1.235200e+10
+OtherAssetsNoncurrent                              USD  3.297800e+10
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-liability-sheet-self">
+<h3><em>Form.liability_sheet(self)</em><a class="headerlink" href="#form-liability-sheet-self" title="Permalink to this headline">¶</a></h3>
+<p>Filters the form to generate a liability sheet. Wrapper around <code class="docutils literal notranslate"><span class="pre">form.filter(&quot;Liability|Liabilities&quot;)</span></code>.</p>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>pandas.DataFrame</strong></p>
+<ul>
+<li><p>a pandas dataframe with just values pertaining to liabilities</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form = instance.query10Q(&quot;AAPL&quot;, (2019, &quot;Q2&quot;))
+&gt;&gt;&gt; form.liability_sheet()
+fy                                                              2019
+fp                                                                Q2
+tag                                                uom
+ContractWithCustomerLiability                      USD  8.200000e+09
+ContractWithCustomerLiabilityCurrent               USD  5.532000e+09
+ContractWithCustomerLiabilityRevenueRecognized     USD  1.900000e+09
+DerivativeLiabilitiesReductionforMasterNettingA... USD  1.700000e+09
+IncreaseDecreaseInContractWithCustomerLiability    USD -5.400000e+08
+IncreaseDecreaseInOtherOperatingLiabilities        USD -3.273000e+09
+Liabilities                                        USD  2.361380e+11
+LiabilitiesAndStockholdersEquity                   USD  3.419980e+11
+LiabilitiesCurrent                                 USD  9.377200e+10
+LiabilitiesNoncurrent                              USD  1.423660e+11
+OtherAccruedLiabilitiesNoncurrent                  USD  2.117900e+10
+OtherLiabilitiesCurrent                            USD  3.536800e+10
+OtherLiabilitiesNoncurrent                         USD  5.216500e+10
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-debt-sheet-self">
+<h3><em>Form.debt_sheet(self)</em><a class="headerlink" href="#form-debt-sheet-self" title="Permalink to this headline">¶</a></h3>
+<p>Filters the form to generate a debt sheet. Wrapper around <code class="docutils literal notranslate"><span class="pre">form.filter(&quot;Debt|Debts&quot;)</span></code>.</p>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>pandas.DataFrame</strong></p>
+<ul>
+<li><p>a pandas dataframe with just values pertaining to debts</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form = instance.query10Q(&quot;AAPL&quot;, 2019)
+&gt;&gt;&gt; form.debt_sheet()
+fy                                                               2019
+fp                                                                 Q1            Q2            Q3
+tag                                                uom
+AvailableForSaleDebtSecuritiesAccumulatedGrossU... USD   9.400000e+07  3.850000e+08  8.920000e+08
+AvailableForSaleDebtSecuritiesAccumulatedGrossU... USD   3.871000e+09  1.532000e+09  4.610000e+08
+AvailableForSaleDebtSecuritiesAmortizedCostBasis   USD   2.488120e+11  2.265580e+11  2.101790e+11
+AvailableForSaleSecuritiesDebtSecurities           USD   2.450350e+11  2.254110e+11  2.106100e+11
+...
+ProceedsFromShortTermDebtMaturingInMoreThanThre... USD   2.166000e+09  1.023500e+10  1.297700e+10
+RepaymentsOfLongTermDebt                           USD            NaN  2.500000e+09  5.500000e+09
+RepaymentsOfShortTermDebtMaturingInMoreThanThre... USD   4.171000e+09  7.787000e+09  1.128300e+10
+ShortTermDebtWeightedAverageInterestRate           pure  2.390000e-02  2.560000e-02  2.490000e-02
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-to-csv-self-path-or-buf">
+<h3><em>Form.to_csv(self, path_or_buf, …)</em><a class="headerlink" href="#form-to-csv-self-path-or-buf" title="Permalink to this headline">¶</a></h3>
+<p>Saves the form as a csv file. Wrapper around <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html">pandas.DataFrame.to_csv</a>;
+follow that link for the full documentation.</p>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form = instance.query10Q(&quot;aapl&quot;, 2018)
+&gt;&gt;&gt; form.to_csv(&quot;Apple_2018_10Q&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="form10k-functions">
+<h2>Form10K Functions<a class="headerlink" href="#form10k-functions" title="Permalink to this headline">¶</a></h2>
+<p><strong>Form10K</strong> represents a SEC form 10-K and is a subclass of <strong>Form</strong>,
+thus inheriting all of the functions included in the <strong>Form</strong> class.</p>
+<div class="section" id="form10k-calc-roe-self-as-list-false">
+<h3><em>Form10K.calc_ROE(self, as_list=False)</em><a class="headerlink" href="#form10k-calc-roe-self-as-list-false" title="Permalink to this headline">¶</a></h3>
+<p>Calculates return on equity (ROE) ratio. ROE = (net income) / (total stockholders equity).</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>as_list : boolean</strong></p>
+<ul>
+<li><p>returns the values as a list if True, otherwise returns values in a dataframe; defaults
+to False</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>list or pandas.DataFrame</strong></p>
+<ul>
+<li><p>a list or pandas dataframe detailing the ROE for every year in the query</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form10K = instance.query10K(&quot;aapl&quot;, [2017, 2018, 2019])
+&gt;&gt;&gt; form10K.calc_ROE()
+fy             2017      2018      2019
+tag uom
+ROE ratio  0.360702  0.555601  0.610645
+</pre></div>
+</div>
+</div>
+<div class="section" id="form10k-calc-currentratio-self-as-list-false">
+<h3><em>Form10K.calc_CurrentRatio(self, as_list=False)</em><a class="headerlink" href="#form10k-calc-currentratio-self-as-list-false" title="Permalink to this headline">¶</a></h3>
+<p>Calculates the current ratio. CurrentRatio = (current assets) / (current liabilities)</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>as_list : boolean</strong></p>
+<ul>
+<li><p>returns the values as a list if True, otherwise returns values in a dataframe; defaults
+to False</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>list or pandas.DataFrame</strong></p>
+<ul>
+<li><p>a list or pandas dataframe detailing the CurrentRatio for every year in the query</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form10K = instance.query10K(&quot;aapl&quot;, [2017, 2018, 2019])
+&gt;&gt;&gt; form10K.calc_CurrentRatio()
+fy                      2017      2018      2019
+tag          uom
+CurrentRatio ratio  1.276063  1.123843  1.540126
+</pre></div>
+</div>
+</div>
+<div class="section" id="form10k-calc-debttoequity-self-as-list-false">
+<h3><em>Form10K.calc_DebtToEquity(self, as_list=False)</em><a class="headerlink" href="#form10k-calc-debttoequity-self-as-list-false" title="Permalink to this headline">¶</a></h3>
+<p>Calculates the debt to equity ratio. DebtToEquity = (total liabilities) / (total stockholders equity)</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>as_list : boolean</strong></p>
+<ul>
+<li><p>returns the values as a list if True, otherwise returns values in a dataframe; defaults
+to False</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>list or pandas.DataFrame</strong></p>
+<ul>
+<li><p>a list or pandas dataframe detailing the DebtToEquity for every year in the query</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form10K = instance.query10K(&quot;aapl&quot;, [2017, 2018, 2019])
+&gt;&gt;&gt; form10K.calc_DebtToEquity()
+fy                      2017      2018      2019
+tag          uom
+DebtToEquity ratio  1.799906  2.413301  2.741004
+</pre></div>
+</div>
+</div>
+<div class="section" id="form10k-calc-bookvalue-self-as-list-false">
+<h3><em>Form10K.calc_BookValue(self, as_list=False)</em><a class="headerlink" href="#form10k-calc-bookvalue-self-as-list-false" title="Permalink to this headline">¶</a></h3>
+<p>Calculates the book value. BookValue = (total assets) - (total liabilities)</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><strong>as_list : boolean</strong></p>
+<ul>
+<li><p>returns the values as a list if True, otherwise returns values in a dataframe; defaults
+to False</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><strong>list or pandas.DataFrame</strong></p>
+<ul>
+<li><p>a list or pandas dataframe detailing the BookValue for every year in the query</p></li>
+</ul>
+</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-&lt;!-- language: python --&gt; notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; form10K = instance.query10K(&quot;aapl&quot;, [2017, 2018, 2019])
+&gt;&gt;&gt; form10K.calc_BookValue(as_list=True)
+[1.340470e+11, 1.071470e+11, 9.048800e+10]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="form10q-functions">
+<h2>Form10Q Functions<a class="headerlink" href="#form10q-functions" title="Permalink to this headline">¶</a></h2>
+<p><strong>Form10K</strong> represents a SEC form 10-Q and is a subclass of <strong>Form</strong>,
+thus inheriting all of the functions included in the <strong>Form</strong> class.</p>
+<p>Currently, there are no functions specifically for <strong>Form10Q</strong>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="LICENSE.html" class="btn btn-neutral float-right" title="License" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Blacktip Research Software Reference Manual" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Matthew Beveridge.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> and ❤️  using a custom <a href="https://github.com/LinxiFan/Sphinx-theme">theme</a> based on <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.8',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
